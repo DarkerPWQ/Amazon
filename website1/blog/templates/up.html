@@ -1,0 +1,19 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>up</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data" >
+<input  name="up" type="hidden" size="10" class="vDateField"  value= />
+
+{{uf.as_p}}
+<input type="submit" value="ok"/>
+</form>
+<a href="/home/">返回继续查询</a>
+<h1>download</h1>
+<input type="button" onclick="location.href='/blog/download/'" value="下载模板文件" >
+{% if  crawlflag %} 
+		<input type="button" onclick="location.href='/blog/download1/'" value="下载结果文件" >
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,63 @@
+
+<html>
+	<head>
+		<title>{{title}}</title>
+		<meta charset="UTF-8">
+		
+	</head>
+	<body>
+<div id="tt1">
+	 <table class="txtCenter table table-striped table-bordered  table-hover">
+	   <thead>
+		 <tr>
+		   <th class="txtCenter">产品序号</th>
+		   <th class="txtCenter">产品Asin</th>
+		   <th class="txtCenter">产品名称</th>
+		   <th class="txtCenter">关键词1</th>
+		   <th class="txtCenter">关键词2</th>
+		   <th class="txtCenter">关键词3</th>
+		   <th class="txtCenter">删除</th>
+		 </tr>
+	   </thead>
+
+	 {% if posts.object_list  %}
+	 {% for commodity in posts.object_list %}
+	 	<tr>
+		   <div><td>{{ forloop.counter }}</td>
+		   <td>{{ commodity.Asin }} </td> 
+		   <td>{{ commodity.productname }} </td> 		
+		   <td>{{commodity.productkeyword1}}</td>
+		   <td>{{commodity.productkeyword2}}</td> 	      
+		   <td>{{commodity.productkeyword3}}</td>
+		 </tr>
+	    {% endfor %} 
+	   </tbody>	  
+	 </table>
+	 {% endif %}
+	 
+	<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">prev</a>
+        {% else %}
+            <span class='empty'></span>
+        {% endif %}
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+        </span>
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+        {% else %}
+            <span class='empty'></span>                             
+        {% endif %}
+    </span>
+</div>
+<body>
+	
+
+
+
+     
+	</html>
+	
+

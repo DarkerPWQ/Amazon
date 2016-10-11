@@ -1,0 +1,18 @@
+status: 301
+content-length: 251
+content-location: http://www.amazon.de/gp/product/B01BN1C54S
+keep-alive: timeout=2, max=20
+server: Server
+connection: Keep-Alive
+location: https://www.amazon.de/gp/product/B01BN1C54S
+date: Fri, 05 Aug 2016 13:14:31 GMT
+-x-permanent-redirect-url: https://www.amazon.de/gp/product/B01BN1C54S
+content-type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://www.amazon.de/gp/product/B01BN1C54S">here</a>.</p>
+</body></html>

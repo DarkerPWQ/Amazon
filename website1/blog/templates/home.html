@@ -1,0 +1,423 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"><!-- 非常重要的调用 -->
+</script>
+<title>查询结果</title>
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<style>
+
+table.txtCenter{
+	text-align:center;
+	border:2px solid #FFFF00;
+}
+th.txtCenter{
+	text-align:center;
+}
+td.yanse{
+	border:2px solid #FFFF00;
+}
+
+input.ziti{
+	font-size:18px;
+	color:red;
+}
+
+body{
+	background-color:#86B4CC;
+}
+
+#preview {
+    background: rgba(253, 255, 250, 0);
+    color: black;
+    width: 22px;
+    height: 22px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+	margin: auto;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+}
+.none{ display:none;}
+
+/* tr[class~="child_row"]{ display:none;}  
+这是css选择器的模糊匹配，但是有个缺陷就是它只能模糊匹配出以空格相隔开的相似字符串,并且该属性的优先级很高,toggle()无法对其属性轮动做出修改，
+*/
+
+/*
+.child_row_1{display:none;}  这样写的话，优先级没上面模糊匹配的高，所以toggle()可以控制其属性的轮动。
+.child_row_2{display:none;}
+*/
+
+</style>
+
+</head>
+
+<body>
+
+<br >
+				<div style="float:right;margin:0 auto;width:200px;"> 
+					<input class = "btn btn-success" type="button" onclick="location.href='/landing/'" value = "公司首页">
+					<input class = "btn btn-primary" type="button" onclick="location.href='/feedback/'" value= "在线反馈">
+				</div>
+				
+				<div style="margin:0 auto;width:200px;"> 
+					<h1 class = "btn btn-success" >合优云科技欢迎您，{{username}}!!!</h1>
+				</div>
+
+<div style="float:right;margin:0 auto;width:200px;"> 				
+	<form method="post" enctype="multipart/form-data" >
+		<input  name="up" type="hidden" size="10" class="vDateField"  value= />
+		{{uf.as_p}}
+		<label>请选择要查询国家站点:</label>
+	   <select name ="countryup">
+      <option value="com" >美国</input>
+      <option value="de" >德国</option>
+      <option value="fr" >法国</option>
+      <option value="co.uk">英国</option>
+	  <option value="es" >西班牙</option>
+	  <option value="it" >意大利</option>
+    </select>
+		<input type="submit" value="上传"/>
+
+		<input type="button" onclick="location.href='/blog/download/'" value="下载模板文件" >
+{% if crawlflag1 %} 
+		<input type="button" onclick="location.href='/blog/download1/'" value="            下载结果文件" >
+{% endif %}
+	</form>
+</div>
+
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">输入格式是输入您具体产品的ASIN，如下：</label>
+					<input class="form-control ziti" type="text" value="B00UACD13Q" readonly>
+				</div>
+<br >
+
+
+	<form role = "form" style = "width = 20px" method="post" action="">
+				
+				
+				<input class="form-control" id="focusedInput" type="text" name="asin" placeholder="请输入要查询的商品名" >
+				<label>请选择要查询国家站点:</label>
+	   <select name ="country">
+      <option value="com" >美国</input>
+      <option value="de" >德国</option>
+      <option value="fr" >法国</option>
+      <option value="co.uk">英国</option>
+	  <option value="es" >西班牙</option>
+	  <option value="it" >意大利</option>
+    </select>
+				<div id = "tip"></div>
+				<p id="numberError" style="color:#c00">
+				{{error}}
+				</p>
+				<p style="color:#c00">
+				{{error2}}
+				</p>
+				<br >
+				<div id="tt3" style="margin:0 auto;width:200px;"> 
+					 
+					<input id = "addproduct" class = "btn btn-success" onclick = "progress()" type = "submit" value = "添加查询商品">
+					
+					
+					<input class = "btn btn-primary" type="button" onclick="location.href='/account/loggedout'" value= "退出登录">
+				</div>
+				
+				<div id="tt4"></div>
+	</form>
+	<br ><br >
+	
+<div id="tt1">
+	 <table class="txtCenter table table-striped table-bordered  table-hover">
+	   <thead>
+		 <tr>
+		   <th class="txtCenter">产品序号</th>
+		   <th class="txtCenter">产品Asin</th>
+		   <th class="txtCenter">查询站点</th>
+		   <th class="txtCenter">产品名称</th>
+		   <th class="txtCenter">关键词1</th>
+		   <th class="txtCenter">关键词2</th>
+		   <th class="txtCenter">关键词3</th>
+		   <th class="txtCenter">添加关键词</th>
+		   <th class="txtCenter">删除</th>
+		 </tr>
+	   </thead>
+	
+	{% if display %}  
+	   <tbody>
+	    {% for commodity in display.display_set.all %}
+		 <tr>
+		   <div><td>{{ forloop.counter }}</td>
+		   <td>{{ commodity.Asin }} </td> 
+		   <td>{{ commodity.countryname }} </td> 
+		   <td>{{ commodity.productname }} </td> 
+		   <td>{{ commodity.productkeyword1 }} </td>
+		   <td>{{ commodity.productkeyword2 }} </td>
+		   <td>{{ commodity.productkeyword3 }} </td> 		   
+		   <td><input onclick = "xialakey({{ forloop.counter }})" class = "btn btn-primary" type="button" value= "添加关键词"></td>
+		   <td><input onclick = 'del_pro({{commodity.id}})'  class = "btn btn-primary" type="button" value= "删除"></td>
+		 </tr>
+		 <form role = "form" style = "width = 20px" method="post" action=""><tr id = "dis{{forloop.counter}}" style="display: none;"><td>
+		 <input class = "btn btn-success"  type = "button" onclick="addDefined({{commodity.id}})" value = "添加关键字" ></td>
+		 <td><input class="form-control" id="addkey{{commodity.id}}" type="text" name="productname" placeholder="请输入自定义关键词" ></td></tr>
+						<!-- <td> <input class="form-control" id="focusedInput_'+String(i+1)+" type="text" name="productname" placeholder="请输入自定义关键词" ></td>'+
+						<td> <input class = "btn btn-success" type = "button" value = "自定义关键词排名" id="selfDefined"
+						 onclick="addDefined('+ String(i+1) +');progress()"></td> -->
+					</form>
+	    {% endfor %} 
+	   </tbody>	  
+    {% endif %}
+	 </table>
+
+</div>
+
+<div id="tt2"></div>
+
+   <script src="/static/css/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+	$("#addproduct").bind("click",function(){
+	$("#tip").text("正在查询。。。");
+	});
+	});
+	<!-- 删除部分，逻辑提供产品的id（唯一）后端进行删除 -->
+	function xialakey(Number){
+				//alert('.child_row'
+				$("#dis"+String(Number)).toggle();						
+			}
+			<!-- 删除部分，逻辑提供产品的id（唯一）后端进行删除 -->
+	function ceshi(){
+				//alert('.child_row'				
+			}
+	function appearkey(Number){
+				//alert('显示')
+				//alert('.child_row'
+				$('.child_row'+String(Number)).toggle();					
+			}
+	function AjaxResult(){
+			$("#preview").show();
+			$("#tt2").html("正在查询结果请稍后。。")
+			$.post('/blog/ajaxResult/',function(result){
+			result = eval("("+result+")");
+			$("#preview").hide();
+			
+			//$("#preview").spin(false);
+			var htmlcontent = '<table class="txtCenter table table-striped table-bordered  table-hover">'+
+									   '<thead>'+
+										 '<tr>'+
+										   '<th class="txtCenter">产品序号</th>'+
+										   '<th class="txtCenter">产品Asin</th>'+
+										   '<th class="txtCenter">查询站点</th>'+
+										   '<th class="txtCenter">产品标题</th>'+
+										   '<th class="txtCenter">关键词1</th>'+
+										   '<th class="txtCenter">关键词2</th>'+
+										   '<th class="txtCenter">关键词3</th>'+
+										   '<th class="txtCenter">添加关键词</th>'+
+										   '<th class="txtCenter">删除</th>'+
+										 '</tr>'+
+									   '</thead>';
+				for (var i = 0; i <= result.productobj.length - 1; i++) {
+					htmlcontent+='<tr class="parent_'+String(i+1)+'"><tr id="row_'+String(i+1)+'" onclick="appearkey('+ String(i+1) +')" style="color:red"><td>'+ 
+					String(i+1) +'</td><td>'+ result.productobj[i]["Asin"] + '</td><td>'+ result.productobj[i]["country"] + '</td><td>'+
+					result.productobj[i]["productname"] + '</td>';
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword1"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword2"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword3"] + '</td><td>';
+					htmlcontent+='<input onclick = "xialakey('+String(i+1)+')"class = "btn btn-primary" type="button" value= "添加关键词"></td>'+
+		   '<td><input onclick = "del_pro('+result.productobj[i]["id"]+')"class = "btn btn-primary" type="button" value= "删除"></td></tr>'+
+		   '<form role = "form" style = "width = 20px" method="post" action=""><tr id="dis'+String(i+1)+'" style="display: none;"><td>'+
+		  '<input class = "btn btn-success"  type = "button" onclick="addDefined('+result.productobj[i]["id"]+')" value = "添加关键字" ></td>'+
+		  '<td><input class="form-control" id="addkey'+result.productobj[i]["id"]+'" type="text" name="productname" placeholder="请输入自定义关键词" ></td></tr>';
+				  htmlcontent+='<tr class="child_row'+String(i+1)+'" style="display: none;">'+
+										'<th class="txtCenter">关键词</th>'+
+										   '<th class="txtCenter">位置</th>'+
+										   '<th class="txtCenter">排名</th>'+
+										   '<th class="txtCenter">趋势情况</th>'+
+										   '<th class="txtCenter">趋势图</th>'+   
+									'</tr>';
+					for (var n = 0; n <= result.productobj[i]["child"].length - 1; n++){
+						if (result.productobj[i]["child"][n]["productkeyword"]){
+						htmlcontent+='<tr class="child_row'+String(i+1)+'" style="display: none;"><td>'+ 
+						result.productobj[i]["child"][n]["productkeyword"]+'</td>'+'<td>'+ result.productobj[i]["child"][n]["productrank"] + '</td><td>'+
+						result.productobj[i]["child"][n]["productindex"]+'</td>'+'<td>'+ result.productobj[i]["child"][n]["varyindex"] + '</td>';
+						if(result.productobj[i]["child"][n]["pic"]=="up")
+						htmlcontent += '<td><img src="/static/images/up.png" /></td></tr>';
+						else if (result.productobj[i]["child"][n]["pic"]=="down")
+						htmlcontent += '<td><img src="/static/images/down.png" /></td></tr>';
+						else
+							htmlcontent += '<td><img src="/static/images/na.png" /></td></tr>';
+						}
+					}					
+					
+					
+				   								
+			}	
+
+			htmlcontent += "</table>";
+			$("#tt1").html(htmlcontent);
+			$("#tt2").text("");
+			
+		})
+	}
+				
+		
+	function del_pro(v){
+	var json_obj = {			 
+				product_id: v,
+				
+				}; //JSON对象
+		var json_str = JSON.stringify(json_obj); 
+	$.post('/blog/del_pro/',json_str,function(result){	
+				result = eval("("+result+")");
+				
+				//alert($("#dis1").html());//寻找不到？原因应该是dis{{forloop.counter}}坐标签导致。\
+			//$("#preview").hide();
+			var htmlcontent = '<table class="txtCenter table table-striped table-bordered  table-hover">'+
+									   '<thead>'+
+										 '<tr>'+
+										   '<th class="txtCenter">产品序号</th>'+
+										   '<th class="txtCenter">产品Asin</th>'+
+										   '<th class="txtCenter">查询站点</th>'+
+										   '<th class="txtCenter">产品标题</th>'+
+										   '<th class="txtCenter">关键词1</th>'+
+										   '<th class="txtCenter">关键词2</th>'+
+										   '<th class="txtCenter">关键词3</th>'+
+										   '<th class="txtCenter">添加关键词</th>'+
+										   '<th class="txtCenter">删除</th>'+
+										 '</tr>'+
+									   '</thead>';
+			for (var i = 0; i <= result.productobj.length - 1; i++) {
+					htmlcontent+='<tr><td>'+ String(i+1) + '</td><td>'+ result.productobj[i]["Asin"] + '</td><td>'+result.productobj[i]["country"]+'</td><td>'+
+					result.productobj[i]["productname"] + '</td>'		
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword1"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword2"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword3"] + '</td><td>'+
+		   '<input onclick = "xialakey('+String(i+1)+')"class = "btn btn-primary" type="button" value= "添加关键词"></td>'+
+		   '<td><input onclick = "del_pro('+result.productobj[i]["id"]+')"class = "btn btn-primary" type="button" value= "删除"></td></tr>'+
+		   '<form role = "form" style = "width = 20px" method="post" action=""><tr id="dis'+String(i+1)+'" style="display: none;"><td>'+
+		  '<input class = "btn btn-success"  type = "button" onclick="addDefined('+result.productobj[i]["id"]+')" value = "添加关键字" ></td>'+
+		  '<td><input class="form-control" id="addkey'+result.productobj[i]["id"]+'" type="text" name="productname" placeholder="请输入自定义关键词" ></td></tr>';
+																
+			}
+			htmlcontent += "</table>";
+			$("#tt1").html(htmlcontent);
+			})
+				
+	}
+	
+	
+	
+	function addDefined(v){	
+			var json_obj = {			 
+				product_id: v,
+				addword: $("#addkey"+String(v)).val(),
+				};    //JSON对象
+			var json_str = JSON.stringify(json_obj); 
+
+			$.post('/blog/addDefined/',json_str,function(result){	
+
+		
+			result = eval("("+result+")");
+			//$("#preview").hide();
+			if (result.error){
+			$("#tip").text(result.content)
+			}
+			else{
+			var htmlcontent = '<table class="txtCenter table table-striped table-bordered  table-hover">'+
+									   '<thead>'+
+										 '<tr>'+
+										   '<th class="txtCenter">产品序号</th>'+
+										   '<th class="txtCenter">产品Asin</th>'+
+										   '<th class="txtCenter">查询站点</th>'+
+										   '<th class="txtCenter">产品标题</th>'+
+										   '<th class="txtCenter">关键词1</th>'+
+										   '<th class="txtCenter">关键词2</th>'+
+										   '<th class="txtCenter">关键词3</th>'+
+										   '<th class="txtCenter">添加关键词</th>'+
+										   '<th class="txtCenter">删除</th>'+
+										 '</tr>'+
+									   '</thead>';
+			for (var i = 0; i <= result.productobj.length - 1; i++) {
+					htmlcontent+='<tr><td>'+ String(i+1) + '</td><td>'+ result.productobj[i]["Asin"] + '</td><td>'+ result.productobj[i]["country"]+'</td><td>'+
+					result.productobj[i]["productname"] + '</td>'		
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword1"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword2"] + '</td>'
+					htmlcontent+='<td>'+ result.productobj[i]["productkeyword3"] + '</td><td>'+
+		   '<input onclick = "xialakey('+String(i+1)+')" class = "btn btn-primary" type="button" value= "添加关键词"></td>'+
+		   '<td><input onclick = "del_pro('+result.productobj[i]["id"]+')"class = "btn btn-primary" type="button" value= "删除"></td></tr>'+
+		   '<form role = "form" style = "width = 20px" method="post" action=""><tr id="dis'+String(i+1)+'" style="display: none;"><td>'+
+		  '<input class = "btn btn-success"  type = "button" onclick="addDefined('+result.productobj[i]["id"]+')" value = "添加关键字" ></td>'+
+		  '<td><input class="form-control" id="addkey'+result.productobj[i]["id"]+'" type="text" name="productname" placeholder="请输入自定义关键词" ></td></tr>'
+		  	}
+			htmlcontent += "</table>";
+			$("#tt1").html(htmlcontent);
+			}
+			})
+	}
+	jQuery(function($){  	
+
+	$('#div2').click(function(){
+	alert($("#focusedInput").val())
+	//var a = $('#demo1').val()
+		var json_obj = {			 
+				username: $('#focusedInput1').val(),
+				password: 'pwq',
+				
+				};    //JSON对象
+				alert(json_obj)
+				var json_str = JSON.stringify(json_obj); 
+				alert(json_str)
+				alert(typeof(json_str))
+		/*$.ajax({
+               type:"POST" ,
+               url:"/blog/del_home/",
+               data:"email=" + email , */
+		$.post('/blog/del_home/',json_str,function(result){	
+	    alert(typeof(result));
+		result = eval("("+result+")");
+		alert('aaa')
+	    alert(result.password);
+    }); 
+})	
+    });	
+</script>		
+	<!-- 进度条功能	 -->
+	<section id="preview"></section>
+	<script src="/static/css/spin.js"></script>
+	<script>
+
+	 function progress(){
+	 var target = document.getElementById('preview')
+	 new Spinner().spin(target);
+	 
+
+
+	 }
+	</script>	
+	<!-- 进度条功能	 -->
+
+	
+    <div style="margin:0 auto;width:200px;"> 
+					<input id="SubmitMessage" class = "btn btn-primary" type="button" onclick="AjaxResult();progress()" value= "查询排名">
+					<input class = "btn btn-primary" type="button" onclick="location.href='/blog/manageProduct/'" value= "管理产品">
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

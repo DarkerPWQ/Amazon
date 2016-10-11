@@ -1,0 +1,30 @@
+status: 301
+content-length: 1
+x-amz-id-1: 18RAJ96BDFVCWX8V2SPT
+content-location: http://www.amazon.com/gp/product/B00UACD13Q
+set-cookie: x-wl-uid=15AYflNz4wB6d5ID3YZE1eYkgqedzrcYbMUUejMRpDshpsI4aYFTlmRntknuRCxnveJK/4x0W4QQ=;
+ path=/; domain=.amazon.com;
+ expires=Tue, 01-Jan-2036 08:00:01 GMT, session-id-time=2082787201l; path=/;
+ domain=.amazon.com;
+ expires=Tue, 01-Jan-2036 08:00:01 GMT, session-id=186-2044051-2941166; path=/;
+ domain=.amazon.com; expires=Tue, 01-Jan-2036 08:00:01 GMT
+expires: -1
+vary: Accept-Encoding,User-Agent,Avail-Dictionary
+server: Server
+-x-permanent-redirect-url: https://www.amazon.com/OSOYOO-ATMEGA328P-Module-Micro-controller-Arduino/dp/B00UACD13Q/186-2044051-2941166?ie=UTF8&redirect=true
+-content-encoding: gzip
+location: https://www.amazon.com/OSOYOO-ATMEGA328P-Module-Micro-controller-Arduino/dp/B00UACD13Q/186-2044051-2941166?ie=UTF8&redirect=true
+pragma: no-cache
+cache-control: no-cache, no-transform
+date: Tue, 21 Jun 2016 11:53:02 GMT
+x-frame-options: SAMEORIGIN
+p3p: policyref="https://www.amazon.com/w3c/p3p.xml",
+ CP="CAO DSP LAW CUR ADM IVAo IVDo CONo OTPo OUR DELi PUBi OTRi BUS PHY
+ ONL UNI PUR FIN COM NAV INT DEM CNT STA HEA PRE LOC GOV OTC "
+content-type: text/html; charset=ISO-8859-1
+x-sdch-encode: 0
+-varied-accept-encoding: gzip,deflate,sdch
+-varied-user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.30 (KHTML,
+ like Gecko) Chrome/12.0.742.91   Safari/534.30
+
+

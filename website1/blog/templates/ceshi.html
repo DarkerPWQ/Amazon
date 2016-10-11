@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>{{title}}</title>
+		<meta charset="UTF-8">
+	</head>
+
+	<body>
+<!-- 
+	<h2>time22:{{time|date:'Y-m-d'}}</h2>
+	<h2>id is:{{pwq}}</h2>
+	
+	<h2>id is:{{gwt}}</h2> -->
+<!-- 	<form action="/blog/index" method='post'>
+	{% csrf_token %}
+	
+<!-- enctype 设置表单的编码方式，目前没发现什么作用 -->
+	<!-- {{form.as_p}} --> <!-- 二者分开上下行 -->
+	
+
+	
+<!-- 		<input type='text' name='pwq' size='10' maxlength='5'>
+		<br> -->
+		<!-- <input type='submit' value='提交'> -->
+<form method='post'>
+
+{{ form.as_p }}
+<input type="submit" value="提交">
+</form>
+     </body>
+	</html>
+	
+

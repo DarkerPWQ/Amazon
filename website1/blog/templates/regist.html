@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- <link href="/staticfiles/css/style.css" rel='stylesheet' type='text/css' /> -->
+<link href="/static/css/style.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--webfonts-->
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700|Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+<!--//webfonts-->
+<!-- <script>
+	function myFunction1()
+		{
+			alert("Thanks for login");
+		}
+		
+	function myFunction2()
+		{
+			alert("Reset the information");
+		}
+</script> -->
+</head>
+
+<style>
+
+div.ziti{
+	font-weight:bold;
+	font-size:24px;
+	color:#00FF00
+	}
+
+</style>
+
+<body>
+	<div class="main">
+	    <div class = "ziti">注册部分</div>
+		<div class="user">
+			<!-- <img src="/staticfiles/images/user.png" alt=""> -->
+			<img src="/static/images/user.png" alt="">
+		</div>
+		<div class="login">
+			<div class="inset">
+				<!-----start-main---->
+				<form action="" method="post">
+			         <div>
+						<span><label>Username</label></span>
+						<span><input type="text" name="username" class="textbox" id="active"></span>
+						<span>{{error}}</span>
+					 </div>
+					 <div>
+						<span><label>Password</label></span>
+					    <span><input type="password" name="password" class="password"></span>
+					 </div>
+					 <div>
+						<span><label>Email</label></span>
+					    <span><input type="email" name="email" class="email"></span>
+					 </div>
+					  <!-- <div>
+						<span><label>Yaoqingma</label></span>
+						<span><input type="text" class="textbox" id="active"></span>
+					  </div> -->
+					<div class="enroll">					
+                        <div class="submit">
+						  <input type="submit" onclick="myFunction1()" value="sign up" >
+						</div>
+						<div class="reset">
+						  <input type="reset" onclick="myFunction2()" value="reset" >
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		<!-----//end-main---->
+		</div>
+		 <!-----start-copyright---->
+   					<div class="copy-right">
+						<!-- <p>Template by <a href="http://w3layouts.com">w3layouts</a></p> --> 
+						<p>合优云科技</p>
+					</div>
+				<!-----//end-copyright---->
+	 
+</body>
+</html>

@@ -1,0 +1,210 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>查询结果</title>
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js">
+</script>
+
+
+<style>
+
+table.txtCenter{
+	text-align:center;
+	border:2px solid #FFFF00;
+}
+th.txtCenter{
+	text-align:center;
+}
+td.yanse{
+	border:2px solid #FFFF00;
+}
+
+input.ziti{
+	font-size:18px;
+	color:red;
+}
+
+body{
+	background-color:#86B4CC;
+}
+.none{ display:none;}
+
+/* tr[class~="child_row"]{ display:none;}  
+这是css选择器的模糊匹配，但是有个缺陷就是它只能模糊匹配出以空格相隔开的相似字符串,并且该属性的优先级很高,toggle()无法对其属性轮动做出修改，
+*/
+
+/*
+.child_row_1{display:none;}  这样写的话，优先级没上面模糊匹配的高，所以toggle()可以控制其属性的轮动。
+.child_row_2{display:none;}
+*/
+
+
+</style>
+
+</head>
+
+<body>
+
+	
+				<div style="margin:0 auto;width:200px;"> 
+					<h1 class = "btn btn-success" >合优云科技欢迎您，{{username}}!!!</h1>
+				</div>
+				
+				<br >
+				<div style="margin:0 auto;width:200px;"> 
+					<input class = "btn btn-primary" type="button" onclick="location.href='/blog/home/'" value= "返回查询">
+					<input class = "btn btn-primary" type="button" onclick="location.href='/account/loggedout/'" value= "退出登录">
+				</div>
+				
+	<form role = "form" method="post" style = "width = 20px">
+				<input  name="q" size="10" class="vDateField" type="text" value={{ the_date }} />
+				<input type="submit" value="查询排名">
+	</form>
+
+	<br ><br >
+	<form role = "form" style = "width = 20px" method="post" action="">	
+	 <table class="txtCenter table table-striped table-bordered  table-hover">
+	   <thead>
+	   <input type="hidden" id="time" name="nowtime">
+		 <tr>
+		   <th class="txtCenter">勾选框</th>		   
+		   <th class="txtCenter">产品Asin</th>
+		   <th class="txtCenter">查询站点</th>
+		   <th class="txtCenter">产品标题</th>
+		   <th class="txtCenter">关键词</th>
+		   <th class="txtCenter">位置</th>
+		   <th class="txtCenter">rank</th>
+		   <th class="txtCenter">趋势</th>
+		 </tr>
+	   </thead>
+	
+	{% if latestDistinctAllObjs %}   
+	   <tbody>
+	    {% for commodity in latestDistinctAllObjs %}
+		 <tr onclick = "xialakey({{forloop.counter}})" >
+		   <td><input type="checkbox" class="fxk" name="checkbox" value="{{ commodity.productname }}"></td>
+		   <td>{{commodity.Asin }} </td>
+		   <td>{{commodity.country }} </td>  
+		   <td>{{commodity.productname }} </td>  
+		   <td>{{commodity.productkeyword1}}</td>
+		   <td>{{commodity.productrank1}}</td>
+		   <td>{{commodity.productindex1}}</td>
+		   <td>{{commodity.varyindex1}}</td>
+		  </tr>
+		  {% if commodity.productkeyword2 %}
+		  <!-- 判断语句存在有问题 -->
+		  <tr class="dis{{forloop.counter}}" style="display: none;"><td>
+		  <td>{{commodity.Asin }} </td> 
+		  <td>{{commodity.country }} </td>  
+		   <td>{{commodity.productname }} </td>  
+		   <td>{{commodity.productkeyword2}}</td>
+		   <td>{{commodity.productrank2}}</td>
+		   <td>{{commodity.productindex2}}</td>
+		   <td>{{commodity.varyindex2}}</td>
+		   </tr>
+		   
+		{%endif%}
+	{% if commodity.productkeyword3 %}
+		  <tr class="dis{{forloop.counter}}" style="display: none;"><td>
+		  <td>{{commodity.Asin }} </td>  
+		  <td>{{commodity.country }} </td>  
+		   <td>{{commodity.productname }} </td>  
+		   <td>{{commodity.productkeyword3}}</td>
+		   <td>{{commodity.productrank3}}</td>
+		   <td>{{commodity.productindex3}}</td>
+		   <td>{{commodity.varyindex3}}</td>
+		   </tr>
+		{%endif%}
+
+		 
+	    {% endfor %} 
+	   </tbody>	 
+	  {%endif%} 
+	 </table>
+	 	<div style="margin:0 auto;width:200px;"> 
+		<input class = "btn btn-primary"  onclick = "gettime()" type="submit" name="btnOK" value="确定删除所选项"/>
+	</div>
+	</form>
+	 
+	 
+	 <p class="page_container">
+	{% if latestDistinctAllObjs.has_previous %}
+	<a href="?page={{ latestDistinctAllObjs.previous_page_number }}" title="Pre">上一页</a> {% endif %}
+	{% for p in page_range %}
+	{% ifequal p latestDistinctAllObjs.number %}
+	<span style="font-size:16px;" title="当前页"><b>{{p}}</b></span>        
+	{% else %}<a href="?page={{p}}" title="第{{p}}页">{{p}}</a>{% endifequal %}
+	{% endfor %}     
+	{% if latestDistinctAllObjs.has_next %}
+	<a href="?page={{ latestDistinctAllObjs.next_page_number }}" title="Next">下一页</a>
+	 {% endif %}  
+	<b>
+	{%if latestDistinctAllObjs.paginator.num_pages%}共 {{ latestDistinctAllObjs.paginator.num_pages }} 页{%endif%}
+	</b>
+	</p>
+	 
+<script type="text/javascript">	 
+function xialakey(Number){
+
+	$(".dis"+String(Number)).toggle();						
+			}
+function gettime(){
+	alert("jin?");
+	var time;
+	time = $(".vDateField").val()
+	$("#time").val(time);
+	
+
+			}
+</script>
+<!-- <form role = "form" style = "width = 20px" method="post" action="">	
+	<div style="margin:0 auto;width:200px;"> 
+		<input class = "btn btn-primary"  onclick="aaa()"  name="btnOK" value="确定删除所选项"/>
+		<input type="hidden" id="test" name="fieldname">
+	</div>
+</form> -->
+
+ <script> 
+/* 
+ function aaa(){
+   alert("ee")
+$('input:checkbox').each(function() {
+
+
+ var value="";
+   var box=document.getElementsByName("checkbox[]");   
+   for (var i=0;i<box.length;i++ ){   
+   if(box[i].checked){ 
+   alert("nice")//判断复选框是否选中  
+ alert(box[i].value)   
+   value=value+box[i].value + "@"; //值的拼凑 .. 具体处理看你的需要,
+   }   
+   } 
+   document.getElementById("test").value = value;
+
+ }
+ */
+
+
+
+ </script>
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

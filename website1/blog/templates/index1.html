@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>请输入两个数字</p>
+<form action="/add/" method="get">
+    a: <input type="text" id="a" name="a"> <br>
+    b: <input type="text" id="b" name="b"> <br>
+    <p>result:21312 <span id='result'></span></p>
+    <button type="button" id='sum'>提交</button>
+</form>
+
+<div id="dict">Ajax 加载字典</div>
+<p id="dict_result"></p>
+ 
+<div id="list">Ajax 加载列表</div>
+<p id="list_result"></p>
+ 
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+      // 求和 a + b
+      $("#sum").click(function(){
+        var a = $("#a").val();
+		//可以这样获取到html的值。
+        var b = $("#b").val();
+ 
+        $.get("/blog/add/",{'a':a,'b':b}, function(s1){
+            $('#result').html(s1);
+        })
+      });
+ 
+      // 列表 list
+      $('#list').click(function(){
+          //$.getJSON('{% url 'ajax-list' %}',function(ret){
+		  $.getJSON('/ajax_list/',function(s1){
+		  //$.post('/ajax_list/',function(s1){
+		  //这里测试用get.post貌似也是可以的。
+            //返回值 ret 在这里是一个列表.
+			//在这里面写js逻辑。
+            for (var i = s1.length - 1; i >= 0; i--) {
+              // 把 ret 的每一项显示在网页上
+              $('#list_result').append(' ' + s1[i])
+            };
+          })
+      })
+ 
+      // 字典 dict
+      $('#dict').click(function(){
+          $.getJSON('/ajax_dict/',function(ret){
+              //返回值 ret 在这里是一个字典
+              $('#dict_result').append(ret.twz + '<br>');
+              // 也可以用 ret['twz']
+          })
+      })
+    });
+</script>
+</body>
+</html>

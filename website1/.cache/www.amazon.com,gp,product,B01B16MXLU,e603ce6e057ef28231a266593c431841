@@ -1,0 +1,30 @@
+status: 301
+content-length: 1
+x-amz-id-1: 05NP7BQ2M6JQSXWYH24S
+content-location: http://www.amazon.com/gp/product/B01B16MXLU
+set-cookie: x-wl-uid=1FKJ2/zz6L2wkAXYoc5rLTZ5ePKM//kfTT/yNUjjR0pTOwYmpW+zruHgTidM3fCeiZxRtJWQVqEI=;
+ path=/; domain=.amazon.com;
+ expires=Tue, 01-Jan-2036 08:00:01 GMT, session-id-time=2082787201l; path=/;
+ domain=.amazon.com;
+ expires=Tue, 01-Jan-2036 08:00:01 GMT, session-id=186-0261347-3742769; path=/;
+ domain=.amazon.com; expires=Tue, 01-Jan-2036 08:00:01 GMT
+expires: -1
+vary: Accept-Encoding,User-Agent,Avail-Dictionary
+server: Server
+-x-permanent-redirect-url: https://www.amazon.com/Lenovo-Convertible-11-6-inch-Touchscreen-Professional/dp/B01B16MXLU/186-0261347-3742769?ie=UTF8&redirect=true
+-content-encoding: gzip
+location: https://www.amazon.com/Lenovo-Convertible-11-6-inch-Touchscreen-Professional/dp/B01B16MXLU/186-0261347-3742769?ie=UTF8&redirect=true
+pragma: no-cache
+cache-control: no-cache, no-transform
+date: Tue, 21 Jun 2016 09:03:37 GMT
+x-frame-options: SAMEORIGIN
+p3p: policyref="https://www.amazon.com/w3c/p3p.xml",
+ CP="CAO DSP LAW CUR ADM IVAo IVDo CONo OTPo OUR DELi PUBi OTRi BUS PHY
+ ONL UNI PUR FIN COM NAV INT DEM CNT STA HEA PRE LOC GOV OTC "
+content-type: text/html; charset=ISO-8859-1
+x-sdch-encode: 0
+-varied-accept-encoding: gzip,deflate,sdch
+-varied-user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.30 (KHTML,
+ like Gecko) Chrome/12.0.742.91   Safari/534.30
+
+

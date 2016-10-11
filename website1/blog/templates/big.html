@@ -1,0 +1,114 @@
+
+<html>
+	<head>
+		<title>{{title}}</title>
+		<meta charset="UTF-8">
+		<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js">
+</script>
+		<script>
+
+$(document).ready(function(){
+  $("#btn1").click(function(){
+	 $("#myDiv").attr("value")='pwqpwpq'
+	 var  b =$("#myDiv").attr("value")
+	 alert(b)
+	 
+	 //alert($("#myDiv").attr("value"))
+	 var g=document.getElementById("myDiv").value
+	 alert(g)
+	  
+    alert("Text: " + $("#myDiv #demo").text());
+	if($("#myDiv #demo").text()>15)
+	{
+		alert('more15')
+	}
+	
+	alert($("#myDiv #demo").text())
+	if (a==$("#myDiv #demo").text()){
+		alert('no')
+	}
+	else{
+		alert('yes')
+	}
+});
+  $("#btn2").click(function(){
+    alert("HTML: " + $("#test").html());
+  });
+});
+
+var myvar=setInterval(function() {
+if(document.all) {
+		document.getElementById("on").click();
+	}
+	else {
+		var e = document.createEvent("MouseEvents");
+		e.initEvent("click", true, true);
+		document.getElementById("on").dispatchEvent(e);
+}
+
+	
+}, 3000);
+v=0
+function loadXMLDoc()
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	   
+    {   
+		var a =document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+		alert(a)
+		
+    }
+}//var a =eval(document.getElementById('myDiv')).value
+//alert('hah')
+
+if(v==$("#myDiv #demo").text())
+{alert('yiyang')}
+else{
+	alert('buyiyang')
+}
+v=$("#myDiv #demo").text()
+//alert(v)
+xmlhttp.open("GET","http://127.0.0.1:8000/blog/small",true);
+xmlhttp.send();
+}
+</script>
+	</head>
+<body>
+<button id="btn1">Show Text</button>
+<button id="btn2">Show HTML</button>
+<p id="test">This is some <b>bold</b> text in a paragraph.</p>
+
+
+<button id="on" type="button" onclick="loadXMLDoc()">Request data</button>
+<div id="myDiv" value={{name}}>{{name}}
+</div>
+<div id="myDiv1">{{name}}
+</div>
+<div id="demo">okwqejo
+</div>
+<img src="/static/images/na.png" />
+<img src="{{STATIC_URL}}images/na.png" />
+<img src="/static/images/up.png">
+
+
+
+</body>	
+
+     
+</html>
+	
+
+	
+
